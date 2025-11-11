@@ -16,9 +16,12 @@
 
         if($usuario && password_verify($senha, $usuario['senha'])){
             
+            $_SESSION ['id'] = $usuario['id'];
+            $_SESSION ['nome'] = $usuario['nome'];
             $_SESSION ['email'] = $email;
             $_SESSION ['senha'] = $senha;
             $_SESSION ['is_admin'] = $usuario['is_admin'];
+            
 
             if($_SESSION['is_admin'] > 0){
                 header('Location: ../Admin/pagAdmin.php');
@@ -29,7 +32,9 @@
 
 
         }else{
-            echo "Email ou senha invalidos!";
+            $_SESSION ['erro_login'] = "Email ou senha inválidos. Tente novamente";
+            header('Location: Login.php');
+            exit();
         }
 
     }
